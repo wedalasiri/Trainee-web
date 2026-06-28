@@ -64,6 +64,9 @@ function enableSearch() {
     const searchInput =
         document.getElementById("searchInput");
 
+    const noResults =
+        document.getElementById("noResults");
+
     searchInput.addEventListener("keyup", () => {
 
         const value =
@@ -72,18 +75,27 @@ function enableSearch() {
         const rows =
             document.querySelectorAll("#historyBody tr");
 
+        let found = false;
+
         rows.forEach(row => {
 
             const date =
                 row.cells[0].textContent.toLowerCase();
 
             if (date.includes(value)) {
+
                 row.style.display = "";
+                found = true;
+
             } else {
+
                 row.style.display = "none";
             }
 
         });
+
+        noResults.style.display =
+            found ? "none" : "block";
 
     });
 }

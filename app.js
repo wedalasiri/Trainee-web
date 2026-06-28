@@ -573,18 +573,28 @@ document.getElementById("searchInput")
     let rows =
         document.querySelectorAll("#tableBody tr");
 
+    let found = false;
+
     rows.forEach(row => {
 
         let employeeId =
             row.cells[1].innerText.toLowerCase();
 
-        row.style.display =
-            employeeId.includes(value)
-            ? ""
-            : "none";
+        if (employeeId.includes(value)) {
+
+            row.style.display = "";
+            found = true;
+
+        } else {
+
+            row.style.display = "none";
+        }
     });
 
+    document.getElementById("noResults").style.display =
+        found ? "none" : "block";
 });
+
 
 
 // ================= SELECT ALL =================
