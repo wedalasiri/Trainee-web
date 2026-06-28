@@ -1,36 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Trainee Details</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Trainee Details</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="card">
+    <div class="header">
 
-<h2 id="title"></h2>
+        <div class="search-container">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by Date..."
+            >
+        </div>
 
-<table>
+        <img src="logo.png" class="logo">
 
-<thead>
-<tr>
-<th>Date</th>
-<th>Check In</th>
-<th>Check Out</th>
-<th>Status</th>
-<th>Location</th>
-</tr>
-</thead>
+    </div>
 
-<tbody id="historyBody"></tbody>
+    <div class="card">
 
-</table>
+      <div class="toolbar">
+
+    <div style="display:flex; align-items:center; gap:15px;">
+
+        <button onclick="window.location.href='index.html'"
+                class="export-btn">
+            ← Back
+        </button>
+
+        <h2 id="title"></h2>
+
+    </div>
+
+    <button id="exportBtn" class="export-btn">
+
+        <svg width="16"
+             height="16"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2">
+
+            <path d="M12 3v12m0 0l-4-4m4 4l4-4M5 19h14"/>
+
+        </svg>
+
+        Export
+
+    </button>
 
 </div>
 
-<script type="module" src="details.js"></script>
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Status</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+
+            <tbody id="historyBody"></tbody>
+
+        </table>
+
+    </div>
+
+    <script type="module" src="details.js"></script>
 
 </body>
 </html>

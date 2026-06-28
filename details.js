@@ -20,31 +20,26 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const params =
-    new URLSearchParams(window.location.search);
+const params = new URLSearchParams(window.location.search);
+const trainee = params.get("id");
 
-const trainee =
-    params.get("id");
-
-document.getElementById("title").innerText =
-    trainee;
+document.getElementById("title").innerText = trainee;
 
 loadHistory();
 
 async function loadHistory() {
 
-    const body =
-        document.getElementById("historyBody");
+    const body = document.getElementById("historyBody");
+    body.innerHTML = "";
 
-    const snapshot =
-        await getDocs(
-            collection(
-                db,
-                "attendance",
-                trainee,
-                "records"
-            )
-        );
+    const snapshot = await getDocs(
+        collection(
+            db,
+            "attendance",
+            trainee,
+            "records"
+        )
+    );
 
     snapshot.forEach(doc => {
 
@@ -60,4 +55,79 @@ async function loadHistory() {
             </tr>
         `;
     });
+
+    enableSearch();
+}
+
+function enableSearch() {
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    searchInput.addEventListener("keyup", () => {
+
+        const value =
+            searchInput.value.toLowerCase();
+
+        const rows =
+            document.querySelectorAll("#historyBody tr");
+
+        rows.forEach(row => {
+
+            const date =
+                row.cells[0].textContent.toLowerCase();
+
+            if (date.includes(value)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+
+        });
+
+    });
+}
+
+document
+    .getElementById("exportBtn")
+    .addEventListener("click", exportToCSV);
+
+function exportToCSV() {
+
+    let csv =
+        "Date,Check In,Check Out,Status,Location\n";
+
+    const rows =
+        document.querySelectorAll("#historyBody tr");
+
+    rows.forEach(row => {
+
+        if (row.style.display !== "none") {
+
+            const cols = row.querySelectorAll("td");
+
+            const rowData = Array.from(cols)
+                .map(col => `"${col.innerText}"`)
+                .join(",");
+
+            csv += rowData + "\n";
+        }
+
+    });
+
+    const blob =
+        new Blob([csv], { type: "text/csv" });
+
+    const url =
+        window.URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+    a.download = `${trainee}_attendance.csv`;
+
+    a.click();
+
+    window.URL.revokeObjectURL(url);
 }
