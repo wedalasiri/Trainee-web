@@ -127,6 +127,54 @@ transition:background .2s;
 .export-btn:hover{
 background:#4a5f6e;
 }
+
+
+
+/* الشكل الافتراضي */
+a{
+    color:black;
+    text-decoration:none;
+}
+
+/* عند المرور بالماوس */
+a:hover{
+    color:#5e7686;
+}
+
+
+
+/* أثناء الضغط */
+a:active{
+    color:#5e7686;
+} 
+
+
+
+
+#dateFilter{
+    height:42px;
+    padding:0 18px;
+    border:2px solid #5e7686;
+    border-radius:30px;
+    background:white;
+    color:#5e7686;
+    font-size:14px;
+    font-weight:bold;
+    outline:none;
+    cursor:pointer;
+    transition:all .2s;
+}
+
+#dateFilter:hover{
+    background:#f5f5f5;
+}
+
+#dateFilter:focus{
+    box-shadow:0 0 0 3px rgba(94,118,134,.2);
+} 
+
+
+
 /* RESPONSIVE */
 
 @media(max-width:1000px){
