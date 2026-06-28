@@ -1,0 +1,158 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="header">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search by Trainee ID...">
+        </div>
+        <img src="logo.png" class="logo">
+    </div>
+
+    <div class="card">
+
+        <div class="toolbar">
+            <span class="toolbar-label"></span>
+           <div style="display:flex; gap:10px;">
+
+    <button id="filterBtn" class="export-btn">
+        Filter
+    </button>
+
+    <button id="exportBtn" class="export-btn">
+
+        <svg width="16" height="16"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2">
+
+            <path d="M12 3v12m0 0l-4-4m4 4l4-4M5 19h14"/>
+
+        </svg>
+
+        Export
+
+    </button>
+
+ </div>
+        </div>
+
+       <table>
+    <thead>
+        <tr>
+            <th><input type="checkbox" id="selectAll"></th>
+            <th>Trainee ID</th>
+            <th>Full Name</th>
+            <th>Date</th>
+            <th>Check In</th>
+            <th>Check Out</th>
+            <th>Status</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+</table>
+
+    </div>
+
+    <script type="module" src="app.js"></script>
+<input
+    type="date"
+    id="dateFilter"
+    style="
+        position:absolute;
+        left:-9999px;
+    ">
+    </body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="header">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search by Trainee ID...">
+        </div>
+
+        <img src="logo.png" class="logo">
+    </div>
+
+    <div class="card">
+
+        <div class="toolbar">
+
+            <span class="toolbar-label"></span>
+
+            <div style="display:flex; gap:10px; align-items:center;">
+
+                <input
+                    type="date"
+                    id="dateFilter"
+                    style="
+                        padding:10px;
+                        border-radius:20px;
+                        border:1px solid #ccc;
+                    "
+                >
+
+                <button id="filterBtn" class="export-btn">
+                    Filter
+                </button>
+
+                <button id="exportBtn" class="export-btn">
+
+                    <svg width="16" height="16"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2">
+
+                        <path d="M12 3v12m0 0l-4-4m4 4l4-4M5 19h14"/>
+
+                    </svg>
+
+                    Export
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="selectAll"></th>
+                    <th>Trainee ID</th>
+                    <th>Full Name</th>
+                    <th>Date</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Status</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+
+            <tbody id="tableBody"></tbody>
+
+        </table>
+
+    </div>
+
+    <script type="module" src="app.js"></script>
+
+</body>
+</html>
