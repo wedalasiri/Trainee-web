@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+
+<body>
+
+<h2>Moodle Login</h2>
+
+<input type="text" id="username" placeholder="Username">
+<br><br>
+
+<input type="password" id="password" placeholder="Password">
+<br><br>
+
+<button onclick="login()">Login</button>
+
+<script>
+
+async function login() {
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    const url =
+    `https://elearning.saudico.com.sa/login/token.php?username=${username}&password=${password}&service=moodle_mobile_app`;
+
+    try {
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        console.log(data);
+
+        if (data.token) {
+            alert("Login Success");
+        } else {
+            alert("Wrong username or password");
+        }
+
+    } catch (error) {
+        console.log(error);
+        alert("Connection Error");
+    }
+}
+
+</script>
+
+</body>
+</html>
