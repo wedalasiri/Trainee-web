@@ -501,32 +501,52 @@ async function loadData() {
 
     const traineesMap = {};
 
-    snapshot.forEach(docSnap => {
+   // تاريخ اليوم بنفس تنسيق Firebase
+const today = new Date().toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+});
 
-        const data = docSnap.data();
+snapshot.forEach(docSnap => {
 
-        if (!data.employeeId) return;
+    const data = docSnap.data();
 
-        // تخزين المتدرب مرة واحدة فقط
-        if (!traineesMap[data.employeeId]) {
+    if (!data.employeeId) return;
+
+    // عرض سجلات اليوم فقط
+    if (data.date !== today) return;
+
+    // تخزين المتدرب مرة واحدة فقط
+    if (!traineesMap[data.employeeId]) {
+
+        traineesMap[data.employeeId] = data;
+
+    } else {
+
+        const oldDate =
+            new Date(traineesMap[data.employeeId].date);
+
+        const newDate =
+            new Date(data.date);
+
+        if (newDate > oldDate) {
 
             traineesMap[data.employeeId] = data;
-
-        } else {
-
-            // الاحتفاظ بأحدث سجل
-            const oldDate =
-                new Date(traineesMap[data.employeeId].date);
-
-            const newDate =
-                new Date(data.date);
-
-            if (newDate > oldDate) {
-
-                traineesMap[data.employeeId] = data;
-            }
         }
-    });
+    }
+});
+if (Object.keys(traineesMap).length === 0) {
+
+    table.innerHTML = `
+        <tr>
+            <td colspan="8">
+                No attendance found for today
+            </td>
+        </tr>
+    `;
+    return;
+}
 
     Object.values(traineesMap).forEach(data => {
 
