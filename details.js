@@ -44,16 +44,37 @@ async function loadHistory() {
     snapshot.forEach(doc => {
 
         const data = doc.data();
+let totalHours = "Not checked out";
 
-        body.innerHTML += `
-            <tr>
-                <td>${data.date || ""}</td>
-                <td>${data.checkIn || "-"}</td>
-                <td>${data.checkOut || "-"}</td>
-                <td>${data.status || "-"}</td>
-                <td>${data.workLocation || "-"}</td>
-            </tr>
-        `;
+if (
+    data.checkIn &&
+    data.checkOut &&
+    data.checkOut !== "--:--"
+) {
+
+    const inDate =
+        new Date(`1970-01-01 ${data.checkIn}`);
+
+    const outDate =
+        new Date(`1970-01-01 ${data.checkOut}`);
+
+    const diff =
+        (outDate - inDate) / (1000 * 60 * 60);
+
+    totalHours = diff.toFixed(2) + " hrs";
+}
+
+    body.innerHTML += `
+    <tr>
+        <td>${data.date || ""}</td>
+        <td>${data.checkIn || "-"}</td>
+        <td>${data.checkOut || "-"}</td>
+        <td>${data.status || "-"}</td>
+        <td>${totalHours}</td>
+        <td>${data.department || "-"}</td>
+        <td>${data.workLocation || "-"}</td>
+    </tr>
+`;
     });
 
     enableSearch();
@@ -107,7 +128,7 @@ document
 function exportToCSV() {
 
     let csv =
-        "Date,Check In,Check Out,Status,Location\n";
+    "Date,Check In,Check Out,Status,Total Hours,Department,Location\n";
 
     const rows =
         document.querySelectorAll("#historyBody tr");

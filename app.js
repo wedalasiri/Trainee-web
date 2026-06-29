@@ -540,7 +540,7 @@ if (Object.keys(traineesMap).length === 0) {
 
     table.innerHTML = `
         <tr>
-            <td colspan="8">
+           <td colspan="10">
                 No attendance found for today
             </td>
         </tr>
@@ -549,6 +549,26 @@ if (Object.keys(traineesMap).length === 0) {
 }
 
     Object.values(traineesMap).forEach(data => {
+
+        let totalHours = "Not checked out";
+
+if (
+    data.checkIn &&
+    data.checkOut &&
+    data.checkOut !== "--:--"
+) {
+
+    const inDate =
+        new Date(`1970-01-01 ${data.checkIn}`);
+
+    const outDate =
+        new Date(`1970-01-01 ${data.checkOut}`);
+
+    const diff =
+        (outDate - inDate) / (1000 * 60 * 60);
+
+    totalHours = diff.toFixed(2) + " hrs";
+}
 
         allRecords.push(data);
 
@@ -567,6 +587,8 @@ if (Object.keys(traineesMap).length === 0) {
                     </a>
                 </td>
 
+                <td>${data.department || "-"}</td>
+
                 <td>${data.date || ""}</td>
 
                 <td>${data.checkIn || "-"}</td>
@@ -574,6 +596,8 @@ if (Object.keys(traineesMap).length === 0) {
                 <td>${data.checkOut || "-"}</td>
 
                 <td>${data.status || "Present"}</td>
+
+                <td>${totalHours}</td>
 
                 <td>${data.workLocation || "-"}</td>
 
@@ -662,15 +686,17 @@ async function exportToCSV() {
 
     let csvRows = [];
 
-    csvRows.push([
-        "Employee ID",
-        "Full Name",
-        "Date",
-        "Check In",
-        "Check Out",
-        "Status",
-        "Location"
-    ].join(","));
+  csvRows.push([
+    "Employee ID",
+    "Full Name",
+    "Department",
+    "Date",
+    "Check In",
+    "Check Out",
+    "Status",
+    "Total Hours",
+    "Location"
+].join(","));
 
     for (const traineeName of selectedNames) {
 
@@ -687,15 +713,37 @@ async function exportToCSV() {
 
             const data = doc.data();
 
-            csvRows.push([
-                data.employeeId || "",
-                data.fullName || "",
-                data.date || "",
-                data.checkIn || "",
-                data.checkOut || "",
-                data.status || "",
-                data.workLocation || ""
-            ].join(","));
+           let totalHours = "Not checked out";
+
+if (
+    data.checkIn &&
+    data.checkOut &&
+    data.checkOut !== "--:--"
+) {
+
+    const inDate =
+        new Date(`1970-01-01 ${data.checkIn}`);
+
+    const outDate =
+        new Date(`1970-01-01 ${data.checkOut}`);
+
+    const diff =
+        (outDate - inDate) / (1000 * 60 * 60);
+
+    totalHours = diff.toFixed(2) + " hrs";
+}
+
+csvRows.push([
+    data.employeeId || "",
+    data.fullName || "",
+    data.department || "",
+    data.date || "",
+    data.checkIn || "",
+    data.checkOut || "",
+    data.status || "",
+    totalHours,
+    data.workLocation || ""
+].join(","));
 
         });
     }
@@ -753,6 +801,26 @@ document.getElementById("filterBtn")
 
         if (data.date === selectedDate) {
 
+            let totalHours = "Not checked out";
+
+if (
+    data.checkIn &&
+    data.checkOut &&
+    data.checkOut !== "--:--"
+) {
+
+    const inDate =
+        new Date(`1970-01-01 ${data.checkIn}`);
+
+    const outDate =
+        new Date(`1970-01-01 ${data.checkOut}`);
+
+    const diff =
+        (outDate - inDate) / (1000 * 60 * 60);
+
+    totalHours = diff.toFixed(2) + " hrs";
+}
+
             allRecords.push(data);
 
             table.innerHTML += `
@@ -770,6 +838,8 @@ document.getElementById("filterBtn")
                         </a>
                     </td>
 
+                    <td>${data.department || "-"}</td>
+
                     <td>${data.date || ""}</td>
 
                     <td>${data.checkIn || "-"}</td>
@@ -777,6 +847,8 @@ document.getElementById("filterBtn")
                     <td>${data.checkOut || "-"}</td>
 
                     <td>${data.status || "Present"}</td>
+
+                    <td>${totalHours}</td>
 
                     <td>${data.workLocation || "-"}</td>
 
