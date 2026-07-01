@@ -503,7 +503,7 @@ async function loadData() {
 
    // تاريخ اليوم بنفس تنسيق Firebase
 const today = new Date().toLocaleDateString("en-GB", {
-    day: "numeric",
+    day: "2-digit",
     month: "short",
     year: "numeric"
 });
@@ -784,12 +784,12 @@ document.getElementById("filterBtn")
     allRecords = [];
 
     const selectedDate =
-        new Date(dateValue)
-        .toLocaleDateString("en-GB", {
-            day: "numeric",
-            month: "short",
-            year: "numeric"
-        });
+    new Date(dateValue)
+    .toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
 
     const snapshot = await getDocs(
         collectionGroup(db, "records")
